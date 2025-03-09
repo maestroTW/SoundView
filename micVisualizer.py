@@ -26,13 +26,12 @@ class AudioVisualizer(QWidget):
         super().__init__()
 
         self.w, self.h = 50, 50  # size
-        self.x_pos, self.y_pos = 50, 250  # coordinate
+        self.x_pos, self.y_pos = 50, 550  # coordinate
 
         self.pen = QPen()
-        self.pen.setColor(Qt.green)
         self.pen.setWidth(3)
 
-        self.resize(100, 300)
+        self.resize(100, 600)
 
         #   sound render
         self.sound_thread = SoundThread()
@@ -42,6 +41,10 @@ class AudioVisualizer(QWidget):
     def on_volume_change(self, volume):
         self.h = -volume
         self.update()
+        if volume > 450:
+            self.pen.setColor(Qt.red)
+        else:
+            self.pen.setColor(Qt.green)
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -52,7 +55,19 @@ class AudioVisualizer(QWidget):
         pen = QPen(Qt.black)
         pen.setWidth(3)
         painter.setPen(pen)
-        painter.drawLine(self.x_pos - 30, 250, self.x_pos - 30, 0)
+        painter.drawLine(self.x_pos - 30, 550, self.x_pos - 30, 50)
+        painter.drawLine(25, 50, 20, 50) #500
+        painter.drawLine(22, 100, 20, 100) #450
+        painter.drawLine(25, 150, 20, 150) #400
+        painter.drawLine(22, 200, 20, 200) #350
+        painter.drawLine(25, 250, 20, 250) #300
+        painter.drawLine(22, 300, 20, 300) #250
+        painter.drawLine(25, 350, 20, 350) #200
+        painter.drawLine(22, 400, 20, 400) #150
+        painter.drawLine(25, 450, 20, 450) #100
+        painter.drawLine(22, 500, 20, 500) #50
+        painter.drawLine(25, 550, 20, 550) #0
+
 
     def height(self):
         return self.geometry().height()
