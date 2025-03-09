@@ -65,13 +65,12 @@ class AudioVisualizer(QWidget):
                     painter.drawText(25, y + 5, str(500 - (y - 50)))
                 else:
                     painter.drawText(20, y + 5, str(500 - (y - 50)))
+#   maybe needed for further support of application:
+    # def height(self):
+    #     return self.geometry().height()
 
 
-    def height(self):
-        return self.geometry().height()
-
-
-# start, without __name__ == "__main__" (maybe later)
+# start
 app = QApplication(sys.argv)
 visualizer = AudioVisualizer()
 visualizer.show()
