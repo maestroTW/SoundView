@@ -1,7 +1,6 @@
 import sys
-import threading
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtGui import QPen, QPainter, QFont
+from PyQt5.QtGui import QPen, QPainter
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 import sounddevice as sd
 import numpy as np
@@ -25,10 +24,8 @@ class AudioVisualizer(QWidget):
 
         self.w, self.h = 50, 50  # size
         self.x_pos, self.y_pos = 50, 550  # coordinate
-
         self.pen = QPen()
         self.pen.setWidth(3)
-
         self.resize(100, 600)
 
         #   sound render
@@ -54,11 +51,21 @@ class AudioVisualizer(QWidget):
         pen.setWidth(3)
         painter.setPen(pen)
         painter.drawLine(self.x_pos - 10, 550, self.x_pos - 10, 50)
+        # small lines and values (bad code, beautiful view)
         for y in range(50, 551, 50):
-            if y % 100 == 50:  # short line
+            if y % 100 == 50:  # long line
                 painter.drawLine(45, y, 40, y)
-            else:  # long line
+                if y >= 500:    # for beautiful display 0
+                    painter.drawText(30, y + 5, str(500 - (y - 50)))
+                else:
+                    painter.drawText(20, y + 5, str(500 - (y - 50)))
+            else:  # short line
                 painter.drawLine(43, y, 40, y)
+                if y >= 500:    # for beautiful display 50
+                    painter.drawText(25, y + 5, str(500 - (y - 50)))
+                else:
+                    painter.drawText(20, y + 5, str(500 - (y - 50)))
+
 
     def height(self):
         return self.geometry().height()
